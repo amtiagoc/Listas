@@ -7,12 +7,13 @@ package listas;
 
 /**
  *
- * @author cano2030
+ * @author scd
  * @param <T>
  */
-public class SinglyLinkedList<T extends Comparable> implements Ilist<T> { 
+public class SinglyLinkedList<T extends Number & Comparable> implements Ilist<T> {
 
     private Node<T> head;
+    private int x;
 
     public SinglyLinkedList() {
         this.head = null;
@@ -27,6 +28,7 @@ public class SinglyLinkedList<T extends Comparable> implements Ilist<T> {
         Node<T> newNode = new Node<>(d);
         newNode.setNextNode(this.head);
         this.head = newNode;
+        x++;
 
     }
 
@@ -72,13 +74,11 @@ public class SinglyLinkedList<T extends Comparable> implements Ilist<T> {
     }
 
     @Override
-    //To verify if it is Empty.
     public boolean isEmpty() {
         return this.head == null;
     }
 
     @Override
-    //Here you can show all data.
     public String showData() {
         String data = "";
         Node<T> current = this.head;
@@ -88,128 +88,22 @@ public class SinglyLinkedList<T extends Comparable> implements Ilist<T> {
         }
         return data;
     }
-//This method is for counting all nodes storage
 
-    public int DataCounter() {
-        int data = 0;
-        Node<T> current = this.head;
-        while (current != null) {
-            data++;
-            current = current.getNextNode();
-        }
-        return data;
-    }
-//This method is to get the Highest node in the list.
-
-    public T Max() {
-        T max = this.head.getData();
-        Node<T> current = this.head;
-
-        while (current != null) {
-            if (max.compareTo(current.getData()) == -1) {
-                max = current.getData();
-            }
-            current = current.getNextNode();
-        }
-        return max;
-    }
-//This method is to get the Smallest node in the list.
-
-    public T Min() {
-        T min = this.head.getData();
-        Node<T> current = this.head;
-
-        while (current != null) {
-            if (min.compareTo(current.getData()) == 1) {
-                min = current.getData();
-            }
-            current = current.getNextNode();
-        }
-        return min;
-    }
-
-    //In this method is where you can get the nodes average.
-    public double Average() {
-        double average;
-        int acum = 0, n = 0;
-        Node<T> current = this.head;
-        while (current != null) {
-            n++;
-            acum += (int) current.getData();
-            current = current.getNextNode();
-        }
-        average = acum / n;
-        return average;
-    }
-//This Method is for searching an especific node in the List.
-
-    public void Search(T number) {
-        Node<T> current = this.head;
-        while (current != null) {
-            if (number == current.getData()) {
-                System.out.println("The Data has been found!!!");
-                break;
-            }
-            if (number != current.getData() && current.getNextNode() == null) {
-                System.out.println(number + " is an inexistent Data");
-            }
-            current = current.getNextNode();
-        }
-    }
-
-    /**
-     *
-     * @param d
-     * @throws Exception
-     */
     @Override
-    //This method as the name says will add a node at the end as the new head.
-    public void addLast(T d) throws Exception {
+    public void addLast(T d) {
         if (isEmpty()) {
             add(d);
         } else {
             Node<T> newNode = new Node<>(d);
             Node<T> current = this.head;
             while (current.getNextNode() != null) {
-                if (d == current.getData()) {
-                    throw new Exception(d + " has been already added");
-                }
                 current = current.getNextNode();
             }
             current.setNextNode(newNode);
         }
-    }
-//This method is to add Data Ordered from Higher to Menor
-
-    /**
-     *
-     * @param d
-     * @throws Exception
-     */
-    @Override
-    public void AddorderedFromHigh(T d) throws Exception {
-        Node<T> newNode = new Node<>(d);
-        if (isEmpty() || d.compareTo(this.head.getData()) == 1) {
-            newNode.setNextNode(this.head);
-            this.head = newNode;
-        } else {
-            Node<T> current = this.head;
-            while (current.getNextNode() != null
-                    && d.compareTo(current.getData()) == -1) {
-                if (d == current.getData()) {
-                    throw new Exception(d + " has been already added");
-                }
-                current = current.getNextNode();
-            }
-            newNode.setNextNode(current.getNextNode());
-            current.setNextNode(newNode);
-        }
+        x++;
     }
 
-    /**
-     *
-     * @throws Exception
-     */
     @Override
     public void delete() throws Exception {
         if (isEmpty()) {
@@ -217,10 +111,10 @@ public class SinglyLinkedList<T extends Comparable> implements Ilist<T> {
         } else {
             this.head = head.getNextNode();
         }
+        x--;
     }
 
     @Override
-    //This method will delete the last node, and as everyone knows is the current head.
     public void deleteLast() throws Exception {
         if (isEmpty()) {
             throw new Exception("No existen datos por borrar");
@@ -231,71 +125,75 @@ public class SinglyLinkedList<T extends Comparable> implements Ilist<T> {
             }
             current.setNextNode(null);
         }
-
+        x--;
     }
-//This method is to modify any node, you need to give the previous node of it.
 
-    public void ModifyData(T dNew, T dOld) {
+    public void deletaData(T d) {
         Node<T> current = this.head;
-        while (current.getData() != dOld) {
+        Node<T> previous = current;
+        while (current.getData() != d) {
+            previous = current;
             current = current.getNextNode();
         }
-        current.setData(dNew);
+
+        previous.setNextNode(current.getNextNode());
+        x--;
     }
-//This Method will delete an Specific node from the list.
-    public void SpecificDelete(T d) {
-        Node<T> current = this.head;
-        if (current.getData() == d) {
-            this.head = current.getNextNode();
-        } else {
-            while (current.getNextNode().getData() != d) {
+
+    /**
+     * @return the x
+     */
+    public int getX() {
+        return x;
+    }
+
+    public double averageList() throws Exception {
+
+        int sum = 0;
+        int countNodes = 0;
+        Node<T> current = head;
+
+        if (!isEmpty() && current.getData() instanceof Integer) {
+
+            while (current != null) {
+                sum += current.getData().intValue();
+                countNodes++;
                 current = current.getNextNode();
             }
-            current.setNextNode(current.getNextNode().getNextNode());
-        }
-    }
-//This method will add a node right after an specific node that already exists.
-    public void InsertAfter(T dAfter, T dBefore) {
-        Node<T> current = this.head;
-        Node<T> newNode = new Node<>(dAfter);
-        if (isEmpty()) {
-            add(dAfter);
-        }
-        while (current.getData() != dBefore) {
-            current = current.getNextNode();
-        }
-        current.setNextNode(newNode);
-        newNode.setNextNode(current.getNextNode().getNextNode());
-    }
-//This method will return the length of an specific list.
-    public int ListLength() {
-        Node<T> current = this.head;
-        int cont = 0;
-        while (current.getNextNode() != null) {
-            cont++;
-            current = current.getNextNode();
-        }
-        return cont;
-    }
-//The method will return a true or false statement to define if the machine are identical.
-    public boolean SameLists(SinglyLinkedList<Integer> dfirst, SinglyLinkedList<Integer> d) {
-        Node<T> current = this.head;
-        Node<T> contemporary = this.head;
-        if (d.isEmpty() || dfirst.isEmpty()) {
-            return false;
-        }
-        if (d.ListLength() != dfirst.ListLength()) {
-            return false;
-        }
-        while (current.getData() != contemporary.getData()) {
+            return sum / countNodes;
 
-            if (current.getData() != contemporary.getData()) {
+        } else {
+            throw new Exception("No es posible realizar el promedio");
+        }
+
+    }
+
+    //Determinar si otra lista es igual.
+    public boolean checkEqualList(SinglyLinkedList<T> otherList) {
+
+        if (getX() == otherList.getX()) {
+            
+            Node<T> current = head;
+            Node<T> currentotherList = otherList.head;
+            int countData = 0;
+            while (current != null) {
+                if (current.getData() == currentotherList.getData()) {
+                    countData++;
+                }
+                current = current.getNextNode();
+                currentotherList = currentotherList.getNextNode();
+            }
+
+            if (countData == getX()) {
+                return true;
+            } else {
                 return false;
             }
-            current.getNextNode();
-            contemporary.getNextNode();
+        }else{
+        
+            return false;
         }
-        return true;
+
     }
 
 }

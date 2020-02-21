@@ -8,22 +8,15 @@ package listas;
 /**
  *
  * @author s208e19
- * @param <T>
  */
 public class Node<T> {
 
     private T data;
     private Node<T> nextNode;
-    private Node<T> PreviousNode;
 
     public Node(T d) {
         this.data = d;
         nextNode = null;
-        PreviousNode = null;
-    }
-
-    Node() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -54,17 +47,4 @@ public class Node<T> {
         this.nextNode = nextNode;
     }
 
-    /**
-     * @return the PreviousNode
-     */
-    public Node getPreviousNode() {
-        return PreviousNode;
-    }
-
-    /**
-     * @param PreviousNode the PreviousNode to set
-     */
-    public void setPreviousNode(Node PreviousNode) {
-        this.PreviousNode = PreviousNode;
-    }
 }

@@ -7,70 +7,67 @@ package listas;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
- * @author cano2030
+ * @author s208e19
  */
 public class Listas {
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws Exception {
+        // TODO code application logic here
 
-    public static void main(String[] args) {
+        DoublyLinkedList<Integer> myDoublelist = new DoublyLinkedList<>();
+        try {
+            myDoublelist.addOrdered(66);
+            myDoublelist.addOrdered(11);
+            myDoublelist.addOrdered(99);
+            myDoublelist.addOrdered(33);
+            myDoublelist.addOrdered(44);
+            myDoublelist.addOrdered(22);
+            myDoublelist.addOrdered(101);
+        } catch (Exception ex) {
+            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        SinglyLinkedList<Integer> miLista = new SinglyLinkedList<>();
-        //Here is where is gonna be print the list even organized from Higher to Menor
+        System.out.println(myDoublelist.showData());
+        System.out.println(myDoublelist.searchData(77));
+        System.out.println(myDoublelist.showData());
         try {
-            miLista.AddorderedFromHigh(11);
-            miLista.AddorderedFromHigh(33);
-            miLista.AddorderedFromHigh(4);
-            miLista.AddorderedFromHigh(88);
-            miLista.AddorderedFromHigh(99);
-            miLista.AddorderedFromHigh(22);
-            miLista.AddorderedFromHigh(23);
-            System.out.println("Data inserted from Higher  to Menor: " + miLista.showData());
-        } catch (Exception e) {
-            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, e);
+            myDoublelist.deleteLast();
+            myDoublelist.deleteLast();
+        } catch (Exception ex) {
+            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //Counting all data in the list
-        System.out.println("Amount of Data: " + miLista.DataCounter());
-        //Printing the highest number in the list.
-        System.out.println("The highest Data: " + miLista.Max());
-        //Printing the smallest number in the list.
-        System.out.println("The smallest Data: " + miLista.Min());
-        //Printing average from all  data.
-        System.out.println("The Data average: " + miLista.Average());
-        //Searching  an especific data.
-        miLista.Search(7);
-        //Where you can see printed a new node at the end of the list.
-        System.out.println("Inserting new nodes at the end of the list: " + miLista.showData());
+
+        System.out.println(myDoublelist.showData());
+        System.out.println(myDoublelist.showDataReverse());
+        myDoublelist.specificDelete(66);
+        System.out.println("List without node:  " + myDoublelist.showData());
         try {
-            miLista.addLast(4);
-            System.out.println("Data updated: " + miLista.showData());
-        } catch (Exception e) {
-            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, e);
+            myDoublelist.InsertNode(4, 44);
+            System.out.println("New list: " + myDoublelist.showData());
+            System.out.println("\r");
+
+        } catch (Exception ex) {
+            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //Modify any data from the list.
-        miLista.ModifyData(2, 4);
-        System.out.println("List with an element modified: " + miLista.showData());
-        miLista.SpecificDelete(4);
-        //List without an specific element.
-        System.out.println("List updated: " + miLista.showData());
-        //List with new node inserted right after an specific node.
-        miLista.InsertAfter(1278, 2);
-        //The list will have added a new node right after an specific node.
-        System.out.println("New list: " + miLista.showData());
-        //You will see the list length
-        System.out.println("The list length is: "+miLista.ListLength());
-        
-          SinglyLinkedList<Integer> miLista1 = new SinglyLinkedList<>();
-//        miLista1.add(99);
-//        miLista1.add(88);
-//        miLista1.add(33);
-//        miLista1.add(11);
-//        miLista1.add(23);
-//        miLista1.add(22);
-//        miLista1.add(2);
-//        miLista1.add(4);
-//You will see as true or false statement if the list are identical.
-        System.out.println("Are the lists identical?  "+miLista.SameLists(miLista, miLista1));
+//Practice Part ------------------------------------------------------------------------------------------------------------------------------------
+
+        DoubleStudentList<Student> myStudentlist = new DoubleStudentList<>();
+        Student st1 = new Student("123", "Email", "Medallo", 3);
+        Student st2 = new Student("456", "Hitler", "Alemania", 1);
+        Student st3 = new Student("7", "Friendzone", "Paris", 5);
+        myStudentlist.add(st1);
+        myStudentlist.add(st2);
+        myStudentlist.add(st3);
+        System.out.println("The list is: " + myStudentlist.showData());
+        System.out.println("Search: " + myStudentlist.searchData("456"));
+        System.out.println("Students that live in: " + myStudentlist.SearchNear("Paris"));
+        myStudentlist.WinnerList();
+        myStudentlist.LoserList();
     }
 }

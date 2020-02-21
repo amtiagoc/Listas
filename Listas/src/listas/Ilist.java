@@ -7,8 +7,7 @@ package listas;
 
 /**
  *
- * @author cano2030
- * @param <T>
+ * @author s208e19
  */
 public interface Ilist<T> {
 
@@ -16,32 +15,23 @@ public interface Ilist<T> {
     *Agregar un dato al inicio
     *@param el dato
      */
-    public void add(T d);
+    public void add(T d)throws Exception;
 
     /*
     *Agregar un dato al final
     *@param el dato
      */
-    public void addLast(T d)throws Exception;
+    public void addLast(T d);
 
     /*
     *Agregar un dato ordenado de menor a mayor
     *@param el dato
      */
-    public void addOrdered(T d);
+    public void addOrdered(T d)throws Exception;
 
     /*
-    *Verificar si la lista esta vacia
+    *Verificar si la lisa esta vacia
     *@return verdadero si esta vacia
-     */
- /*
-    *Borrar un dato al inicio
-    *@param el dato
-     */
-    public void AddorderedFromHigh(T d)throws Exception;
-        /*
-    *Verify if list is Empty
-    *@return true if It is
      */
  /*
     *Borrar un dato al inicio
